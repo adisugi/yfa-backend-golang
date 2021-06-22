@@ -16,22 +16,29 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	transService := service.NewTransaksiService(transrepo)
 	transHandler := handler.NewTransaksiHandler(transService)
 
-	kurirrepo := repository.NewKurirRepository(db)
-	kurirService := service.NewKurirService(kurirrepo)
-	kurirHandler := handler.NewKurirHandler(kurirService)
-
 	trans := router.Group("/transaksi")
 	{
 		trans.GET("/", middleware.CORSMiddleware(), transHandler.GetTransaksi)
 	}
 
+	kurirrepo := repository.NewKurirRepository(db)
+	kurirService := service.NewKurirService(kurirrepo)
+	kurirHandler := handler.NewKurirHandler(kurirService)
+
 	kurirs := router.Group("/kurir")
 	{
 		kurirs.GET("/", middleware.CORSMiddleware(), kurirHandler.GetKurir)
 		kurirs.GET("/:id_kurir", middleware.CORSMiddleware(), kurirHandler.GetOneKurir)
+	}
 
+	penerimaRepo := repository.NetPenerimaRepository(db)
+	penerimaService := service.NewPenerimaService(penerimaRepo)
+	penerimaHandler := handler.NewPenerimaHandler(penerimaService)
+
+	penerimas := router.Group("/penerima")
+	{
+		penerimas.GET("/", middleware.CORSMiddleware(), penerimaHandler.GetPenerima)
 	}
 
 	return router
-
 }
