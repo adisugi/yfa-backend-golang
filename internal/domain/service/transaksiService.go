@@ -44,6 +44,7 @@ func (s *TransaksiService) GetTransaksi() (*[]entity.TransaksiModelView, error) 
 		transaksi.FotoPenerima = item.FotoPenerima
 		transaksi.TanggalSampai = item.TanggalTransaksi
 		transaksi.IsDelete = item.IsDelete
+		//kurir
 		transaksi.IdKurir = item.IdKurir
 		transaksi.NamaKurir = item.Kurir.NamaKurir
 		transaksi.NoTelpKurir = item.Kurir.NoTelpKurir
@@ -51,6 +52,22 @@ func (s *TransaksiService) GetTransaksi() (*[]entity.TransaksiModelView, error) 
 		transaksi.Nik = item.Kurir.Nik
 		transaksi.Ttl = item.Kurir.Ttl
 		transaksi.File = item.Kurir.File
+		//penerima
+		transaksi.IdPenerima = item.IdPenerima
+		transaksi.NamaPenerima = item.Penerima.NamaPenerima
+		transaksi.TelpPenerima = item.Penerima.TelpPenerima
+		transaksi.ProvinceNamePenerima = item.Penerima.ProvinceNamePenerima
+		transaksi.CityNamePenerima = item.Penerima.CityNamePenerima
+		transaksi.AlamatPenerima = item.Penerima.AlamatPenerima
+		transaksi.KodePosPenerima = item.Penerima.KodePosPenerima
+		//pengirirm
+		transaksi.IdPengirim = item.IdPengirim
+		transaksi.NamaPengirim = item.Pengirim.NamaPengirim
+		transaksi.TelpPengirim = item.Pengirim.TelpPengirim
+		transaksi.ProvinceName = item.Pengirim.ProvinceName
+		transaksi.CityName = item.Pengirim.CityName
+		transaksi.AlamatPengirim = item.Pengirim.AlamatPengirim
+		transaksi.KodePosPengirim = item.Pengirim.KodePosPengirim
 		transaksis = append(transaksis, transaksi)
 	}
 

@@ -24,7 +24,7 @@ func (r *TransaksiRepository) GetTransaksi() (*[]entity.Transaksi, error) {
 	//err := r.db.Order("id_transaksi desc").Find(&trans).Error
 	//err := r.db.Joins("JOIN kurirs ON kurirs.id_kurir = transaksis.id_kurir").Find(&trans).Error
 	//err := r.db.Table("transaksis").Joins("JOIN kurirs ON kurirs.id_kurir = transaksis.id_kurir").Find(&trans).Error
-	err := r.db.Preload("Kurir").Find(&trans).Error
+	err := r.db.Preload("Kurir").Preload("Penerima").Preload("Pengirim").Find(&trans).Error
 	if err != nil {
 		return nil, err
 	}
