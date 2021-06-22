@@ -41,7 +41,7 @@ func (s *TransaksiService) GetTransaksi() (*[]entity.TransaksiModelView, error) 
 		transaksi.StatusDelivery = item.StatusDelivery
 		transaksi.TanggalTransaksi = item.TanggalTransaksi
 		transaksi.Resi = item.Resi
-		transaksi.PenerimaPaket = item.Resi
+		transaksi.PenerimaPaket = item.PenerimaPaket
 		transaksi.FotoPenerima = item.FotoPenerima
 		transaksi.TanggalSampai = item.TanggalTransaksi
 		transaksi.IsDelete = item.IsDelete
@@ -87,9 +87,44 @@ func (s *TransaksiService) GetResi(resi string) (*entity.TransaksiModelView, err
 
 	if result != nil {
 		transVM = entity.TransaksiModelView{
-			IdTransaksi: result.IdTransaksi,
-			Resi:        result.Resi,
+			IdTransaksi:      result.IdTransaksi,
+			NamaBarang:       result.NamaBarang,
+			JumlahBarang:     result.JumlahBarang,
+			KategoriLayanan:  result.KategoriLayanan,
+			OngkosKirim:      result.OngkosKirim,
+			Estimasi:         result.Estimasi,
+			BeratBarang:      result.BeratBarang,
+			StatusDelivery:   result.StatusDelivery,
+			TanggalTransaksi: result.TanggalTransaksi,
+			Resi:             result.Resi,
+			PenerimaPaket:    result.PenerimaPaket,
+			FotoPenerima:     result.FotoPenerima,
+			TanggalSampai:    result.TanggalTransaksi,
+			IsDelete:         result.IsDelete,
+			//kurir
+			IdKurir:     result.IdKurir,
 			NamaKurir:   result.Kurir.NamaKurir,
+			NoTelpKurir: result.Kurir.NoTelpKurir,
+			Alamat:      result.Kurir.Alamat,
+			Nik:         result.Kurir.Nik,
+			Ttl:         result.Kurir.Ttl,
+			File:        result.Kurir.File,
+			//penerima
+			IdPenerima:           result.IdPenerima,
+			NamaPenerima:         result.Penerima.NamaPenerima,
+			TelpPenerima:         result.Penerima.TelpPenerima,
+			ProvinceNamePenerima: result.Penerima.ProvinceNamePenerima,
+			CityNamePenerima:     result.Penerima.CityNamePenerima,
+			AlamatPenerima:       result.Penerima.AlamatPenerima,
+			KodePosPenerima:      result.Penerima.KodePosPenerima,
+			//pengirirm
+			IdPengirim:      result.IdPengirim,
+			NamaPengirim:    result.Pengirim.NamaPengirim,
+			TelpPengirim:    result.Pengirim.TelpPengirim,
+			ProvinceName:    result.Pengirim.ProvinceName,
+			CityName:        result.Pengirim.CityName,
+			AlamatPengirim:  result.Pengirim.AlamatPengirim,
+			KodePosPengirim: result.Pengirim.KodePosPengirim,
 		}
 	}
 
