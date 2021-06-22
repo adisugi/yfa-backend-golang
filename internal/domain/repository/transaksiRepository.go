@@ -11,6 +11,7 @@ type TransaksiRepository struct {
 
 type ITransaksiRepository interface {
 	GetTransaksi() (*[]entity.Transaksi, error)
+	GetResi(string) (*entity.Transaksi, error)
 }
 
 func NewTransaksiRepository(db *gorm.DB) *TransaksiRepository {
@@ -28,6 +29,14 @@ func (r *TransaksiRepository) GetTransaksi() (*[]entity.Transaksi, error) {
 	if err != nil {
 		return nil, err
 	}
+	return &trans, err
+}
 
+func (r *TransaksiRepository) GetResi(resi string) (*entity.Transaksi, error) {
+	var trans entity.Transaksi
+	err := r.db.Preload("Kurir").Preload("Penerima").Preload("Pengirim").Where("resi = ?", resi).Find(&trans).Error
+	if err != nil {
+		return nil, err
+	}
 	return &trans, err
 }

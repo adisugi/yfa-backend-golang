@@ -31,3 +31,14 @@ func (h *TransaksiHandler) GetTransaksi(c *gin.Context) {
 
 	response.ResponseOkWithData(c, result)
 }
+
+func (h *TransaksiHandler) GetResi(c *gin.Context) {
+	resi := c.Param("resi")
+
+	result, err := h.transaksiService.GetResi(resi)
+	if err != nil {
+		response.ResponseError(c, err.Error(), http.StatusInternalServerError)
+	}
+
+	response.ResponseOkWithData(c, result)
+}

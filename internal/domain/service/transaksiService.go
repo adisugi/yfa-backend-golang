@@ -11,6 +11,7 @@ type TransaksiService struct {
 
 type ITransaksiService interface {
 	GetTransaksi() (*[]entity.TransaksiModelView, error)
+	GetResi(string) (*entity.TransaksiModelView, error)
 }
 
 func NewTransaksiService(transRepo repository.ITransaksiRepository) *TransaksiService {
@@ -73,4 +74,24 @@ func (s *TransaksiService) GetTransaksi() (*[]entity.TransaksiModelView, error) 
 
 	return &transaksis, nil
 
+}
+
+func (s *TransaksiService) GetResi(resi string) (*entity.TransaksiModelView, error) {
+	result, err := s.transRepo.GetResi(resi)
+
+	if err != nil {
+		return nil, err
+	}
+
+	var transVM entity.TransaksiModelView
+
+	if result != nil {
+		transVM = entity.TransaksiModelView{
+			IdTransaksi: result.IdTransaksi,
+			Resi:        result.Resi,
+			NamaKurir:   result.Kurir.NamaKurir,
+		}
+	}
+
+	return &transVM, nil
 }

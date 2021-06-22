@@ -19,6 +19,7 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	trans := router.Group("/transaksi")
 	{
 		trans.GET("/", middleware.CORSMiddleware(), transHandler.GetTransaksi)
+		trans.GET("/resi/:resi", middleware.CORSMiddleware(), transHandler.GetResi)
 	}
 
 	//kurir
