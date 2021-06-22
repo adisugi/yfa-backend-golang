@@ -1,0 +1,15 @@
+App:
+  port: 2222
+
+Database:
+  Host: "127.0.0.1"
+  Port: 5433
+  Username: "postgres"
+  Password: "admin"
+  DBName: "db_yfa_react"
+
+#Files:
+#  Path: "./files"
+#
+#Jwt:
+#  Secret: ""
