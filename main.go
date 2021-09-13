@@ -10,7 +10,7 @@ import (
 	"yfa-golang/pkg/database"
 )
 
-func init()  {
+func init() {
 	config.GetConfig()
 }
 
@@ -41,11 +41,13 @@ func main() {
 
 	defer db.Close()
 
-	port := fmt.Sprintf(":%d",viper.GetInt("App.Port"))
+	//fmt.Println("halo wey")
+	//GetMaxId(db, "id_kurir", kurir)
+	//Id := GetMax(db, "kurirs", "id_kurir")
+	//fmt.Println(*Id)
+
+	port := fmt.Sprintf(":%d", viper.GetInt("App.Port"))
 	app := api.SetupRouter(db)
 	app.Run(port)
-
-	//GetTransaksiii(db)
-
 
 }

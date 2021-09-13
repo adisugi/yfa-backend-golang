@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -17,6 +18,43 @@ func NewKurirHandler(kurirService service.IKurirService) *KurirHandler {
 	var kurirHandler = KurirHandler{}
 	kurirHandler.kurirService = kurirService
 	return &kurirHandler
+}
+
+func (h *KurirHandler) SaveKurir(c *gin.Context) {
+	//IdKurir: kurirVM.IdKurir,
+	//	NamaKurir: kurirVM.NamaKurir,
+	//		NoTelpKurir: kurirVM.NoTelpKurir,
+	//		Alamat: kurirVM.Alamat,
+	//		Nik: kurirVM.Nik,
+	//		Ttl: kurirVM.Ttl,
+	//		File: kurirVM.File,
+	//		IsDelete: kurirVM.IsDelete,
+	//idKurir := c.PostForm("idKurir")
+	namaKurir := c.PostForm("namaKurir")
+	noTelpKurir := c.PostForm("noTelpKurir")
+	alamat := c.PostForm("alamat")
+	nik := c.PostForm("nik")
+	ttl := c.PostForm("ttl")
+	file := c.PostForm("file")
+	isDelete := c.DefaultPostForm("isDelete", "0")
+	fmt.Print(isDelete)
+
+	kurir := entity.KurirModelView{
+		NamaKurir:   namaKurir,
+		NoTelpKurir: noTelpKurir,
+		Alamat:      alamat,
+		Nik:         nik,
+		Ttl:         ttl,
+		File:        file,
+		//IsDelete: isDelete,
+	}
+
+	result, err := h.kurirService.SaveKurir(&kurir)
+	if err != nil {
+		response.ResponseError(c, err.Error(), http.StatusInternalServerError)
+	}
+
+	response.ResponseCreated(c, result)
 }
 
 func (h *KurirHandler) GetKurir(c *gin.Context) {

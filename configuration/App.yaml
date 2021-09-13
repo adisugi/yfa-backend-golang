@@ -6,7 +6,8 @@ Database:
   Port: 5433
   Username: "postgres"
   Password: "admin"
-  DBName: "db_yfa_react"
+  DBName: "db_yfa_react2"
+#  DBName: "db_yfa2"
 
 #Files:
 #  Path: "./files"

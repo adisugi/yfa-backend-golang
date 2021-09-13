@@ -24,12 +24,13 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 
 	//kurir
 	kurirrepo := repository.NewKurirRepository(db)
-	kurirService := service.NewKurirService(kurirrepo)
+	kurirService := service.NewKurirService(kurirrepo, db)
 	kurirHandler := handler.NewKurirHandler(kurirService)
 	kurirs := router.Group("/kurir")
 	{
 		kurirs.GET("/", middleware.CORSMiddleware(), kurirHandler.GetKurir)
 		kurirs.GET("/id/:id_kurir", middleware.CORSMiddleware(), kurirHandler.GetOneKurir)
+		kurirs.POST("/insert", middleware.CORSMiddleware(), kurirHandler.SaveKurir)
 	}
 
 	//penerima

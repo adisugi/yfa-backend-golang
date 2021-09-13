@@ -12,12 +12,22 @@ type KurirRepository struct {
 type IKurirRepository interface {
 	GetKurir() ([]entity.Kurir, error)
 	GetOneKurir(int) (*entity.Kurir, error)
+	SaveKurir(*entity.Kurir) (*entity.Kurir, error)
 }
 
 func NewKurirRepository(db *gorm.DB) *KurirRepository {
 	var kurirRepo = KurirRepository{}
 	kurirRepo.db = db
 	return &kurirRepo
+}
+
+func (r *KurirRepository) SaveKurir(kurir *entity.Kurir) (*entity.Kurir, error) {
+	err := r.db.Create(&kurir).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return kurir, nil
 }
 
 func (r *KurirRepository) GetKurir() ([]entity.Kurir, error) {
@@ -37,7 +47,3 @@ func (r *KurirRepository) GetOneKurir(id int) (*entity.Kurir, error) {
 	}
 	return &kurir, err
 }
-
-
-
-
