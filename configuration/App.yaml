@@ -9,8 +9,8 @@ Database:
   DBName: "db_yfa_react2"
 #  DBName: "db_yfa2"
 
-#Files:
-#  Path: "./files"
+Files:
+  KurirPath: "./files/kurir"
 #
 #Jwt:
 #  Secret: ""

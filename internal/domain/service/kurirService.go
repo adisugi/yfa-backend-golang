@@ -18,6 +18,8 @@ type IKurirService interface {
 	UpdateKurir(*entity.KurirModelView) (*entity.KurirModelView, error)
 	HDeleteKurir(int) error
 	SDeleteKurir(int) error
+	GetExistId(int) bool
+	GetFile(int) (*string, error)
 }
 
 func NewKurirService(kurirRepo repository.IKurirRepository, db *gorm.DB) *KurirService {
@@ -166,4 +168,24 @@ func (s *KurirService) GetOneKurir(id int) (*entity.KurirModelView, error) {
 	}
 
 	return &kurirVM, nil
+}
+
+func (s *KurirService) GetExistId(id int) bool {
+	exist, err := s.kurirRepo.GetExistId(id)
+	if err != nil {
+		return false
+	}
+
+	return exist
+}
+
+func (s *KurirService) GetFile(id int) (*string, error) {
+	file, err := s.kurirRepo.GetFile(id)
+	if err != nil {
+		return nil, err
+	}
+
+	fileB64 := fileToBase(*file, "KurirPath")
+
+	return fileB64, err
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm"
 	"github.com/spf13/viper"
 	"log"
@@ -32,6 +33,20 @@ func init() {
 //
 //}
 
+type ExistId struct {
+	Id int
+}
+
+func GetExistId(db *gorm.DB, id int) bool {
+	existId := ExistId{}
+	err := db.Table("kurirs").Select("id_kurir AS id").Where("id_kurir = ?", id).Scan(&existId).Error
+	if err != nil {
+		return false
+	}
+
+	return true
+}
+
 func main() {
 	db, err := database.InitDB()
 	if err != nil {
@@ -49,5 +64,9 @@ func main() {
 	port := fmt.Sprintf(":%d", viper.GetInt("App.Port"))
 	app := api.SetupRouter(db)
 	app.Run(port)
+
+	//var kur repository.IKurirRepository
+	//a := kur.GetExistId(202)
+	//fmt.Println(a)
 
 }

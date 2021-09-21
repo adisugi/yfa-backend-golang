@@ -16,6 +16,8 @@ type IKurirRepository interface {
 	UpdateKurir(*entity.Kurir) (*entity.Kurir, error)
 	HDeleteKurir(int) error
 	SDeleteKurir(*entity.Kurir) error
+	GetExistId(id int) (bool, error)
+	GetFile(id int) (*string, error)
 }
 
 func NewKurirRepository(db *gorm.DB) *KurirRepository {
@@ -77,4 +79,32 @@ func (r *KurirRepository) GetOneKurir(id int) (*entity.Kurir, error) {
 		return nil, err
 	}
 	return &kurir, err
+}
+
+func (r *KurirRepository) GetExistId(id int) (bool, error) {
+	type ExistId struct {
+		Id int
+	}
+
+	existId := ExistId{}
+	err := r.db.Table("kurirs").Select("id_kurir AS id").Where("id_kurir = ?", id).Scan(&existId).Error
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
+}
+
+func (r *KurirRepository) GetFile(id int) (*string, error) {
+	type kurirFile struct {
+		File string
+	}
+
+	file := kurirFile{}
+	err := r.db.Table("kurirs").Select("file").Where("id_kurir = ?", id).Scan(&file).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &file.File, err
 }
